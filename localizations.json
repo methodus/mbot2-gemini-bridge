@@ -1,0 +1,53 @@
+{
+  "german": {
+    "lang": "de",
+    "forward": "vor",
+    "backward": "zurück",
+    "left": "links",
+    "right": "rechts",
+    "up": "hoch",
+    "down": "runter",
+    "open": "auf",
+    "close": "zu",
+    "listening": "Ich höre...",
+    "nothing_recorded": "Ich habe leider nichts verstanden",
+    "error": "Fehler im Hybrid-Streaming: {}",
+    "error_network_unavailable": "Proxy nicht erreichbar. Läuft der Server?",
+    "instructions": "Drücke B, um eine Frage zu stellen und A, um die Antwort zu unterbrechen.",
+    "pending_network": "Warte auf WiFi-Verbindung..."
+  },
+  "english": {
+    "lang": "en",
+    "forward": "forward",
+    "backward": "backward",
+    "left": "left",
+    "right": "right",
+    "up": "up",
+    "down": "down",
+    "open": "open",
+    "close": "close",
+    "listening": "I'm listening...",
+    "nothing_recorded": "Sorry, I didn't catch that",
+    "error": "Hybrid streaming error: {}",
+    "error_network_unavailable": "Proxy unreachable. Is the server running?",
+    "instructions": "Press B to ask a question and A to interrupt the answer.",
+    "pending_network": "Waiting for WiFi connection..."
+  },
+  "french": {
+    "lang": "fr",
+    "forward": "en avant",
+    "backward": "en arrière",
+    "left": "à gauche",
+    "right": "à droite",
+    "up": "en haut",
+    "down": "en bas",
+    "open": "ouvrir",
+    "close": "fermer",
+    "listening": "J'écoute...",
+    "nothing_recorded": "Désolé, ich n'ai rien entendu",
+    "error": "Erreur de streaming hybride : {}",
+    "error_network_unavailable": "Proxy inaccessible. Le serveur est-il lancé ?",
+    "instructions": "Appuie sur B pour poser une question et sur A pour m'interrompre.",
+    "pending_network": "En attente de connexion WiFi..."
+  }
+}

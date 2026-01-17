@@ -1,0 +1,7 @@
+[gemini]
+api-key = "YOUR_API_KEY"
+model = "gemini-2.5-flash-lite"
+system-prompt = "system_prompt.txt"
+
+[network]
+port = 5000
