@@ -148,9 +148,7 @@ IS_SMART_WORLD_GRIPPER = True  # Set to True if the "Smart World" gripper is ins
 
 Connect your CyberPi via USB or Bluetooth Dongle to your PC, select the "Upload" mode and copy the program to your CyberPi
 
-# Usage
-
-## ⌨️ Controls
+# ⌨️ Controls
 
 Button B: Press to talk. You have 3 seconds to record your question to the AI.
 Button A: Press to immediately stop the current speech or movement (Emergency Stop).
