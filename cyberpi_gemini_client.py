@@ -53,7 +53,7 @@ def audio_player_worker(payload, samplerate):
 
 def show_error(e):
     global current_localization
-    cyberpi.console.println(localization["error"].format(str(e)))
+    cyberpi.display.show_label(localization["error"].format(str(e)), 12, 0, 0)
 
 def stream_audio_via_socket(pi_ip, port, total_bytes):
     global is_playing_active, CHUNK_SIZE, SAMPLERATE, abort_streaming
@@ -191,9 +191,21 @@ def init():
     localization = localizations[LANGUAGE]
     res.close()
 
+def reset_memory():
+    global BASE_URL
+    try:
+        res = requests.post(BASE_URL + "/reset")
+        res.close()
+        cyberpi.display.show_label(localization["reset"], 12, 0, 0)
+    except Exception as e:
+        show_error(e)
+
 def stop_interaction():
     global abort_streaming
-    abort_streaming = True
+    if not abort_streaming:
+        reset_memory()
+    else
+        abort_streaming = True
 
 @event.is_press('a')
 def is_btn_press():
