@@ -1,5 +1,5 @@
 # mbot2-gemini-bridge
-A Python bridge for MBot2 to communicate with MBot2
+A Python bridge for MBot2 to communicate with Google Gemini
 
 This is a demonstration of a working Gemini integration on the CyberPi. There were several caveats to solve due to the limitations of the CyberPi. The primary issue of the CyberPi is its limited CPU power and low memory capacity.
 
