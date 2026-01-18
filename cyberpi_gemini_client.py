@@ -214,5 +214,5 @@ def main():
         mp3_music_o.set_volume(40)
         cyberpi.led.show_all("green")
         cyberpi.display.show_label(localization["instructions"], 12, 0, 0)
-    except:
-        show_error()
+    except Exception as e:
+        show_error(e)

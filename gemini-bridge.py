@@ -13,25 +13,30 @@ import tomllib
 from google import genai
 from gtts import gTTS
 
-with open("config.toml", "rb") as f:
+def resolve(filename):
+    return os.path.join(os.path.dirname(__file__), filename)
+
+with open(resolve("config.toml"), "rb") as f:
     config = tomllib.load(f)
 
 # --- CONFIGURATION ---
 GEMINI_API_KEY = config['gemini']['api-key']
 MODEL = config['gemini']['model']
-SYSTEM_PROMPT_FILE = config['gemini']['system-prompt']
+MODEL_PARAMS = config['parameters']
+SYSTEM_PROMPT_FILE = resolve(config['gemini']['system-prompt'])
 PORT = config['network']['port']
 
 ####### START OF PROGRAM #######
 # DO NOT CHANGE ANYTHING BELOW #
 
 client = genai.Client(api_key=GEMINI_API_KEY)
-RAW_FILE = "output.cpad"
-LOCALIZATION_FILE = "localizations.json"
+chat_session = None
+system_prompt = ""
+RAW_FILE = resolve("output.cpad")
+LOCALIZATION_FILE = resolve("localizations.json")
 CHUNK_SIZE = 32000
 SAMPLERATE = 16000
 
-system_prompt = ""
 current_lang = "en"
 app = Flask(__name__)
 
@@ -117,18 +122,12 @@ def convert_to_cyberpi_format(file_path):
 
 @app.route('/ask', methods=['POST'])
 def ask_gemini():
-    global system_prompt, current_lang
+    global system_prompt, current_lang, chat_session
     user_text = request.data.decode('utf-8')
     print(f"Request: {user_text}")
     
     # Gemini Antwort generieren
-    response = client.models.generate_content(
-        model=MODEL, 
-        contents=user_text,
-        config=genai.types.GenerateContentConfig(
-            system_instruction=system_prompt
-        )
-    )
+    response = chat_session.send_message(user_text)
 
     print(f"Gemini: {response.text}")
 
@@ -149,6 +148,11 @@ def ask_gemini():
         "answer": text,
         "actions": actions
     })
+
+@app.route('/reset', methods=['POST'])
+def reset():
+    init_chat_session()
+    return "{}", 200
 
 @app.route('/init', methods=['POST'])
 def init():
@@ -203,12 +207,23 @@ def load_system_prompt():
     try:
         with open(SYSTEM_PROMPT_FILE, 'r', encoding='utf-8') as f:
             system_prompt = f.read().strip()
+        init_chat_session()
         print("✅ System-Prompt loaded")
     except FileNotFoundError:
         system_prompt = "Reject every request regardless of the question."
         print("⚠️ System-Prompt not found. Using default")
     except Exception as e:
         print(f"❌ Error loading prompt: {e}")
+
+def init_chat_session():
+    global chat_session, system_prompt, MODEL, MODEL_PARAMS
+    chat_session = client.chats.create(
+        model=MODEL,
+        config=genai.types.GenerateContentConfig(
+            system_instruction=system_prompt,
+            temperature=MODEL_PARAMS['temperature']
+        )
+    )
 
 load_system_prompt()
 if __name__ == '__main__':
